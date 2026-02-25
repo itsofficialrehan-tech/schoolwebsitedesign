@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Explore Campus | Aurora International School</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Poppins:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+/* ================= GLOBAL ================= */
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:"Poppins",sans-serif;
+  background:radial-gradient(circle at top,#0f172a,#020617 70%);
+  color:#fff;
+  overflow-x:hidden;
+}
+
+/* ================= CURSOR ================= */
+body{cursor:none}
+.cursor{
+  position:fixed;
+  width:34px;height:34px;
+  border:2px solid #c084fc;
+  transform:translate(-50%,-50%) rotate(0deg);
+  pointer-events:none;
+  z-index:9999;
+  transition:transform .15s ease,box-shadow .2s ease;
+  box-shadow:0 0 20px rgba(168,85,247,.6);
+}
+.cursor::after{
+  content:"";
+  position:absolute;inset:7px;
+  border:1px solid rgba(255,255,255,.6)
+}
+.cursor.hover{
+  transform:translate(-50%,-50%) rotate(45deg) scale(1.35);
+  box-shadow:0 0 40px rgba(168,85,247,.9)
+}
+
+/* ================= HERO ================= */
+.hero{
+  min-height:80vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  padding:0 24px;
+}
+.hero h1{
+  font-family:"Playfair Display",serif;
+  font-size:clamp(2.8rem,5vw,3.8rem);
+  letter-spacing:.25em;
+  margin-bottom:22px;
+}
+.hero p{
+  max-width:760px;
+  font-size:1.05rem;
+  line-height:2;
+  opacity:.78;
+}
+
+/* ================= SECTION ================= */
+.section-title{
+  text-align:center;
+  margin:100px 0 60px;
+}
+.section-title h2{
+  font-family:"Playfair Display",serif;
+  font-size:2.3rem;
+  letter-spacing:.2em;
+}
+
+/* ================= GRID ================= */
+.campus-grid{
+  max-width:1200px;
+  margin:auto;
+  padding:0 24px 120px;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:36px;
+}
+.campus-card{
+  position:relative;
+  height:300px;
+  border-radius:24px;
+  overflow:hidden;
+  padding:28px;
+  display:flex;
+  align-items:flex-end;
+  background-size:cover;
+  background-position:center;
+  cursor:pointer;
+  transition:all .6s cubic-bezier(.22,1,.36,1);
+}
+.campus-card::before{
+  content:"";
+  position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(0,0,0,.9),rgba(0,0,0,.3));
+}
+.campus-card:hover{
+  transform:translateY(-14px) scale(1.05);
+  box-shadow:0 40px 100px rgba(124,58,237,.45);
+}
+.campus-content{position:relative}
+.campus-content h3{
+  font-family:"Playfair Display",serif;
+  font-size:1.4rem;
+  letter-spacing:.2em;
+  margin-bottom:10px;
+}
+.campus-content p{
+  font-size:.95rem;
+  line-height:1.7;
+  opacity:.75;
+}
+
+/* ================= IMAGES ================= */
+.library{background-image:url("assets/images/facilities/library.jpg")}
+.science{background-image:url("assets/images/facilities/science.jpg")}
+.computer{background-image:url("assets/images/facilities/computer.jpg")}
+.sports{background-image:url("assets/images/facilities/sports.jpg")}
+.auditorium{background-image:url("assets/images/facilities/auditorium.jpg")}
+
+/* ================= POPUP ================= */
+.popup{
+  position:fixed;inset:0;
+  background:rgba(0,0,0,.8);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  opacity:0;pointer-events:none;
+  transition:.4s ease;
+  z-index:999;
+}
+.popup.active{opacity:1;pointer-events:auto}
+.popup-box{
+  background:#020617;
+  border-radius:20px;
+  padding:40px;
+  max-width:520px;
+  text-align:center;
+}
+.popup-box h3{
+  font-family:"Playfair Display",serif;
+  letter-spacing:.2em;
+  margin-bottom:16px;
+}
+.popup-box p{opacity:.75;line-height:1.7}
+.popup-box button{
+  margin-top:24px;
+  padding:10px 26px;
+  background:none;
+  border:1px solid #c084fc;
+  color:#fff;
+  cursor:pointer;
+}
+
+/* ================= SCROLL ANIM ================= */
+.reveal{
+  opacity:0;
+  transform:translateY(60px);
+  transition:1s ease;
+}
+.reveal.show{
+  opacity:1;
+  transform:none;
+}
+
+/* ================= FOOTER ================= */
+footer{
+  text-align:center;
+  padding:40px 20px;
+  font-size:.8rem;
+  letter-spacing:.15em;
+  opacity:.45;
+}
+</style>
+</head>
+
+<body>
+
+<div class="cursor" id="cursor"></div>
+
+<section class="hero reveal">
+  <h1>EXPLORE OUR CAMPUS</h1>
+  <p>
+    Our campus is designed to support quality education and overall
+    development, providing students with inspiring spaces to learn,
+    grow, and succeed.
+  </p>
+</section>
+
+<div class="section-title reveal">
+  <h2>CAMPUS HIGHLIGHTS</h2>
+</div>
+
+<section class="campus-grid">
+  <div class="campus-card library reveal" data-title="Library" data-text="A peaceful learning space that supports reading, research, and independent study.">
+    <div class="campus-content"><h3>LIBRARY</h3></div>
+  </div>
+
+  <div class="campus-card science reveal" data-title="Science Lab" data-text="Well-equipped labs that encourage hands-on learning and experimentation.">
+    <div class="campus-content"><h3>SCIENCE LAB</h3></div>
+  </div>
+
+  <div class="campus-card computer reveal" data-title="Computer Lab" data-text="Modern systems that help students build digital and technical skills.">
+    <div class="campus-content"><h3>COMPUTER LAB</h3></div>
+  </div>
+
+  <div class="campus-card sports reveal" data-title="Sports Complex" data-text="Facilities that promote fitness, teamwork, and sportsmanship.">
+    <div class="campus-content"><h3>SPORTS COMPLEX</h3></div>
+  </div>
+
+  <div class="campus-card auditorium reveal" data-title="Auditorium" data-text="A large space for assemblies, performances, and cultural events.">
+    <div class="campus-content"><h3>AUDITORIUM</h3></div>
+  </div>
+</section>
+
+<footer>© Aurora International School · Learn · Grow · Achieve</footer>
+
+<!-- POPUP -->
+<div class="popup" id="popup">
+  <div class="popup-box">
+    <h3 id="popTitle"></h3>
+    <p id="popText"></p>
+    <button onclick="closePop()">Close</button>
+  </div>
+</div>
+
+<script>
+/* CURSOR */
+const c=document.getElementById("cursor");
+window.addEventListener("mousemove",e=>{
+  c.style.left=e.clientX+"px";
+  c.style.top=e.clientY+"px";
+});
+document.querySelectorAll(".campus-card,button").forEach(el=>{
+  el.addEventListener("mouseenter",()=>c.classList.add("hover"));
+  el.addEventListener("mouseleave",()=>c.classList.remove("hover"));
+});
+
+/* POPUP */
+const popup=document.getElementById("popup");
+const pt=document.getElementById("popTitle");
+const px=document.getElementById("popText");
+document.querySelectorAll(".campus-card").forEach(card=>{
+  card.onclick=()=>{
+    pt.innerText=card.dataset.title;
+    px.innerText=card.dataset.text;
+    popup.classList.add("active");
+  }
+});
+function closePop(){popup.classList.remove("active")}
+
+/* SCROLL REVEAL */
+const rev=document.querySelectorAll(".reveal");
+window.addEventListener("scroll",()=>{
+  const h=window.innerHeight*.85;
+  rev.forEach(el=>{
+    if(el.getBoundingClientRect().top<h) el.classList.add("show");
+  });
+});
+</script>
+
+</body>
+</html>

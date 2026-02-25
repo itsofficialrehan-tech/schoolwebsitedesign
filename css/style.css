@@ -1,0 +1,686 @@
+/* =====================================================
+   GLOBAL RESET + BASE
+===================================================== */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  background: #000;
+  color: #fff;
+  font-family: "Poppins", sans-serif;
+}
+
+
+/* =====================================================
+   ROYAL MAGIC CURSOR (STABLE VERSION)
+===================================================== */
+
+body {
+  cursor: none;
+}
+
+#magic-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 40px;
+  height: 40px;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+}
+
+.cursor-core {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 7px;
+  height: 7px;
+  background: #ffffff;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.cursor-aura {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(168,85,247,0.55) 0%,
+    rgba(139,92,246,0.35) 45%,
+    rgba(124,58,237,0.15) 70%,
+    transparent 100%
+  );
+  transform: translate(-50%, -50%);
+  filter: blur(10px);
+  transition: all 0.25s ease;
+}
+
+.cursor-hover .cursor-aura {
+  width: 76px;
+  height: 76px;
+  opacity: 0.9;
+}
+
+
+/* =====================================================
+   SCROLL PROGRESS BAR
+===================================================== */
+
+#scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  width: 0%;
+  background: linear-gradient(
+    90deg,
+    #7c3aed,
+    #a855f7,
+    #c084fc
+  );
+  z-index: 9999;
+}
+
+
+/* =====================================================
+   NAVBAR
+===================================================== */
+
+.navbar {
+  transition: all 0.35s ease;
+}
+
+.navbar.shrink {
+  backdrop-filter: blur(16px);
+  background: rgba(10, 5, 20, 0.65);
+}
+
+
+/* =====================================================
+   SECTIONS (AFTER ENTER)
+===================================================== */
+
+section {
+  position: relative;
+  padding: 140px 0;
+}
+
+section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at top,
+    rgba(124,58,237,0.08),
+    transparent 60%
+  );
+  pointer-events: none;
+}
+
+
+/* =====================================================
+   CINEMATIC TYPOGRAPHY
+===================================================== */
+
+.section-title {
+  font-family: "Playfair Display", serif;
+  font-size: clamp(2rem, 3.5vw, 3rem);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-align: center;
+  margin-bottom: 28px;
+  color: #fff;
+}
+
+section p {
+  max-width: 760px;
+  margin: 0 auto;
+  font-size: 0.95rem;
+  line-height: 1.9;
+  letter-spacing: 0.03em;
+  color: rgba(255,255,255,0.75);
+  text-align: center;
+}
+
+
+/* =====================================================
+   CARDS (Academics / Houses / Facilities)
+===================================================== */
+
+.academic-card,
+.house-card,
+.facility-card {
+  position: relative;
+  padding: 44px 26px;
+  text-align: center;
+
+  font-size: 0.8rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+
+  color: rgba(255,255,255,0.85);
+
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  backdrop-filter: blur(14px);
+
+  border-radius: 20px;
+
+  transition: all 0.45s cubic-bezier(0.22,1,0.36,1);
+}
+
+.academic-card:hover,
+.house-card:hover,
+.facility-card:hover {
+  transform: translateY(-10px);
+  background: rgba(124,58,237,0.16);
+  border-color: rgba(168,85,247,0.5);
+  box-shadow: 0 30px 80px rgba(124,58,237,0.18);
+}
+
+
+/* =====================================================
+   CONTACT FORM
+===================================================== */
+
+.input-field {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.1);
+  padding: 14px 18px;
+  border-radius: 14px;
+  color: #fff;
+  font-size: 0.85rem;
+  letter-spacing: 0.04em;
+}
+
+.input-field::placeholder {
+  color: rgba(255,255,255,0.45);
+}
+
+.input-field:focus {
+  outline: none;
+  border-color: rgba(168,85,247,0.6);
+  box-shadow: 0 0 0 1px rgba(168,85,247,0.3);
+}
+
+
+/* =====================================================
+   GSAP HELPERS
+===================================================== */
+
+.reveal-section {
+  transform-origin: center;
+}
+
+.letter {
+  display: inline-block;
+}
+
+
+/* =====================================================
+   AUDIO UNLOCK LAYER
+===================================================== */
+
+#audio-unlock {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  background: transparent;
+}
+/* =============================
+   HOUSES – MAGIC BANNERS
+============================= */
+
+.houses-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 40px;
+  margin-top: 80px;
+}
+
+.house-banner {
+  height: 320px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-family: "Playfair Display", serif;
+  font-size: 1.3rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+
+  color: #fff;
+  border-radius: 20px;
+
+  background-size: cover;
+  background-position: center;
+
+  position: relative;
+  overflow: hidden;
+}
+
+/* Dark overlay */
+.house-banner::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.65);
+}
+
+/* Text upar rahe */
+.house-banner {
+  z-index: 1;
+}
+
+/* =============================
+   SCHOOL HOUSES BANNERS
+============================= */
+
+.houses-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 28px;
+  margin-top: 60px;
+}
+
+.house-banner {
+  height: 420px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-family: "Playfair Display", serif;
+  font-size: 2.4rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: #fff;
+
+  background-size: cover;
+  background-position: center;
+  position: relative;
+
+  border-radius: 26px;
+  overflow: hidden;
+
+  transition: transform 0.6s cubic-bezier(0.22,1,0.36,1);
+}
+
+.house-banner::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0,0,0,0.15),
+    rgba(0,0,0,0.85)
+  );
+}
+
+.house-banner:hover {
+  transform: translateY(-12px) scale(1.03);
+}
+
+/* HOUSE IMAGES */
+.house-banner.phoenix {
+  background-image: url("assets/images/phoenix.jpg");
+}
+
+.house-banner.falcon {
+  background-image: url("assets/images/falcon.jpg");
+}
+
+.house-banner.serpent {
+  background-image: url("assets/images/serpent.jpg");
+}
+
+.house-banner.titan {
+  background-image: url("assets/images/titan.jpg");
+}
+/* =============================
+   HOUSES – FORCE IMAGE BANNERS
+============================= */
+
+.houses-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 28px;
+  margin-top: 64px;
+}
+
+.house-banner {
+  height: 420px;
+  position: relative;
+  border-radius: 26px;
+  overflow: hidden;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-size: cover !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+
+  transition: transform 0.6s cubic-bezier(0.22,1,0.36,1);
+}
+
+/* DARK OVERLAY */
+.house-banner::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0,0,0,0.2),
+    rgba(0,0,0,0.85)
+  );
+  z-index: 1;
+}
+
+.house-banner span {
+  position: relative;
+  z-index: 2;
+  font-family: "Playfair Display", serif;
+  font-size: 2.4rem;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+.house-banner:hover {
+  transform: translateY(-12px) scale(1.04);
+}
+
+/* ===== IMAGES (FORCE PATH) ===== */
+
+.house-banner.phoenix {
+  background-image: url("../assets/images/phoenix.jpg");
+}
+
+.house-banner.falcon {
+  background-image: url("../assets/images/falcon.jpg");
+}
+
+.house-banner.serpent {
+  background-image: url("../assets/images/serpent.jpg");
+}
+
+.house-banner.titan {
+  background-image: url("../assets/images/titan.jpg");
+}
+/* =============================
+   ACADEMICS – CINEMATIC BANNERS
+============================= */
+
+.academics-section {
+  padding: 140px 6vw;
+  background: radial-gradient(circle at top, #0b1020, #000);
+}
+
+.academics-grid {
+  margin-top: 80px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 40px;
+}
+
+.academic-banner {
+  position: relative;
+  height: 420px;
+  border-radius: 28px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-size: cover;
+  background-position: center;
+
+  cursor: pointer;
+  transition: transform 0.6s cubic-bezier(0.22,1,0.36,1),
+              box-shadow 0.6s ease;
+}
+
+/* DARK OVERLAY */
+.academic-banner::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0,0,0,0.15),
+    rgba(0,0,0,0.75)
+  );
+  z-index: 1;
+}
+
+/* TITLE */
+.academic-banner span {
+  position: relative;
+  z-index: 2;
+  font-family: "Playfair Display", serif;
+  font-size: 1.4rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: #fff;
+  text-shadow: 0 10px 40px rgba(0,0,0,0.9);
+}
+
+/* HOVER MAGIC */
+.academic-banner:hover {
+  transform: translateY(-14px) scale(1.02);
+  box-shadow: 0 50px 120px rgba(124,58,237,0.25);
+}
+
+/* =============================
+   ACADEMICS IMAGES
+============================= */
+
+.academic-banner.primary {
+  background-image: url("../assets/images/academics/primary.jpg");
+}
+
+.academic-banner.middle {
+  background-image: url("../assets/images/academics/middle.jpg");
+}
+
+.academic-banner.secondary {
+  background-image: url("../assets/images/academics/secondary.jpg");
+}
+
+.academic-banner.senior {
+  background-image: url("../assets/images/academics/senior.jpg");
+}
+/* =============================
+   ACADEMICS POPUP MODAL
+============================= */
+
+#academics-popup {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  backdrop-filter: blur(6px);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+
+  z-index: 99999;
+}
+
+#academics-popup.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+#academics-popup-img {
+  width: 80%;
+  max-width: 620px;
+  aspect-ratio: 1 / 1;
+
+  border-radius: 22px;
+  object-fit: cover;
+
+  box-shadow: 0 40px 120px rgba(124,58,237,0.4);
+}
+
+/* Close button */
+#academics-close {
+  position: absolute;
+  top: 32px;
+  right: 48px;
+
+  font-size: 28px;
+  cursor: pointer;
+  color: white;
+
+  opacity: 0.8;
+}
+
+#academics-close:hover {
+  opacity: 1;
+}
+
+
+/* =============================
+   FACILITIES – HOUSE STYLE
+============================= */
+
+.facilities-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 28px;
+  margin-top: 80px;
+}
+
+.facility-banner {
+  position: relative;
+  height: 260px;
+  border-radius: 22px;
+  overflow: hidden;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-size: cover;
+  background-position: center;
+
+  transition: all 0.6s cubic-bezier(0.22,1,0.36,1);
+}
+
+/* Dark overlay */
+.facility-banner::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0,0,0,0.85),
+    rgba(0,0,0,0.35)
+  );
+  z-index: 1;
+}
+
+/* Title */
+.facility-banner span {
+  position: relative;
+  z-index: 2;
+
+  font-family: "Playfair Display", serif;
+  font-size: 1.2rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: #fff;
+  opacity: 0.9;
+}
+
+/* Hover magic */
+.facility-banner:hover {
+  transform: translateY(-10px) scale(1.03);
+  box-shadow: 0 30px 80px rgba(124,58,237,0.35);
+}
+
+/* =============================
+   FACILITY IMAGES
+============================= */
+
+.facility-banner.library {
+  background-image: url("../assets/images/facilities/library.jpg");
+}
+
+.facility-banner.science {
+  background-image: url("../assets/images/facilities/science.jpg");
+}
+
+.facility-banner.computer {
+  background-image: url("../assets/images/facilities/computer.jpg");
+}
+
+.facility-banner.sports {
+  background-image: url("../assets/images/facilities/sports.jpg");
+}
+
+.facility-banner.auditorium {
+  background-image: url("../assets/images/facilities/auditorium.jpg");
+}
+/* ===== FORCE CURSOR VISIBILITY ===== */
+
+body {
+  cursor: none !important;
+}
+
+#cursor-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 9999999;
+  display: block;
+  opacity: 1;
+}
+
+canvas {
+  visibility: visible !important;
+}
+
+
+body {
+  cursor: none !important;
+}
+
+#cursor-canvas {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999999;
+}
+
+/* magnetic targets */
+a,
+button,
+.facility-banner,
+.house-banner,
+.academic-card {
+  cursor: none;
+}

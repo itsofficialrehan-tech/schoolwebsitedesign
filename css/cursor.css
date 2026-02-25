@@ -1,0 +1,19 @@
+body {
+  cursor: none;
+}
+
+#cursor-canvas {
+  position: fixed;
+  inset: 0;
+  z-index: 999999;
+  pointer-events: none;
+}
+
+/* magnetic targets */
+a,
+button,
+.facility-banner,
+.house-banner,
+.academic-card {
+  cursor: none;
+}

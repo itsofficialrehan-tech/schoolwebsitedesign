@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aurora International School</title>
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<!-- Tailwind CDN -->
+<script src="https://cdn.tailwindcss.com"></script>
+
+<!-- Custom CSS -->
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/intro.css">
+<link rel="stylesheet" href="css/cursor.css">
+<!-- GSAP -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+<!-- Three.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+
+<body class="bg-black text-white overflow-hidden">
+  
+<!-- FACILITY POPUP -->
+<div id="facility-popup">
+  <div class="popup-overlay"></div>
+
+  <div class="popup-box">
+    <span class="popup-close">&times;</span>
+    <h2 id="popup-title"></h2>
+    <img id="popup-image" src="" alt="Facility Image">
+  </div>
+</div>
+<!-- SCROLL PROGRESS BAR -->
+<div id="scroll-progress"></div>
+
+<!-- ================= GLOBAL CURSOR ================= -->
+<div id="magic-cursor">
+  <div class="cursor-aura"></div>
+  <div class="cursor-core"></div>
+</div>
+
+<!-- ================= INTRO SCREEN ================= -->
+<div id="intro">
+  <video id="introVideo" autoplay muted loop playsinline>
+    <source src="assets/aurora.mp4" type="video/mp4">
+  </video>
+
+  <div class="intro-overlay"></div>
+
+  <div class="intro-content">
+    <h1 class="school-name">Aurora International School</h1>
+    <p class="tagline">Where Brilliance Rises</p>
+
+    <!-- EXPLICIT USER ACTION (AUDIO UNLOCK) -->
+    <button id="enter-site" class="enter-btn">
+      ENTER AURORA
+    </button>
+  </div>
+</div>
+
+<!-- AUDIO -->
+<audio id="introAudio" src="assets/ambience.mp3" preload="auto"></audio>
+
+<!-- ================= NAVBAR ================= -->
+<nav class="navbar fixed top-0 left-0 w-full z-50 backdrop-blur-md bg-white/10 border-b border-white/20">
+  <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+    <h2 class="text-xl font-semibold tracking-wide">Aurora</h2>
+    <ul class="flex gap-8 text-sm">
+      <li><a href="#about" class="nav-link">About</a></li>
+      <li><a href="#academics" class="nav-link">Academics</a></li>
+      <li><a href="#houses" class="nav-link">Houses</a></li>
+      <li><a href="#facilities" class="nav-link">Facilities</a></li>
+      <li><a href="#contact" class="nav-link">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ================= MAIN CONTENT ================= -->
+<div id="main-content">
+
+<!-- HERO -->
+<section id="hero" class="h-screen flex items-center justify-center relative reveal-section">
+  <div class="text-center z-10">
+    <h1 class="text-6xl font-bold font-playfair hero-title">
+      Aurora International School
+    </h1>
+    <p class="mt-6 text-lg opacity-80">
+      Empowering Minds. Shaping Futures.
+    </p>
+    <div class="mt-8 flex justify-center gap-6">
+      <!-- ADMISSIONS OPEN BUTTON + POPUP (ALL-IN-ONE) -->
+<span id="admissionBtn" style="
+  cursor:pointer;
+  font-size:1rem;
+  letter-spacing:0.15em;
+  color:#c084fc;
+  position:relative;
+">
+  Admissions Open
+</span>
+
+<!-- POPUP -->
+<div id="admissionPopup" style="
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.7);
+  backdrop-filter:blur(8px);
+  z-index:99999;
+  align-items:center;
+  justify-content:center;
+">
+
+  <div style="
+    background:radial-gradient(circle at top,#0f172a,#020617);
+    padding:40px 32px;
+    border-radius:20px;
+    max-width:520px;
+    width:90%;
+    text-align:center;
+    color:white;
+    box-shadow:0 40px 120px rgba(124,58,237,0.45);
+    animation:popupIn 0.5s ease;
+  ">
+
+    <h2 style="
+      font-family:'Playfair Display',serif;
+      letter-spacing:0.2em;
+      margin-bottom:20px;
+    ">
+      ADMISSIONS UPDATE
+    </h2>
+
+    <p style="
+      font-size:0.95rem;
+      line-height:1.9;
+      color:rgba(255,255,255,0.75);
+      margin-bottom:28px;
+    ">
+      Online registration is currently <b>closed</b>.<br><br>
+      Please visit the school office for detailed admission enquiries,
+      guidance, and in-person assistance.
+    </p>
+
+    <button id="closePopup" style="
+      padding:12px 34px;
+      border-radius:30px;
+      border:1px solid rgba(168,85,247,0.6);
+      background:rgba(124,58,237,0.2);
+      color:white;
+      letter-spacing:0.2em;
+      cursor:pointer;
+      transition:0.3s;
+    ">
+      OK
+    </button>
+  </div>
+</div>
+
+<style>
+@keyframes popupIn {
+  from { transform:scale(0.85); opacity:0; }
+  to { transform:scale(1); opacity:1; }
+}
+#closePopup:hover {
+  background:rgba(124,58,237,0.4);
+}
+</style>
+
+<script>
+  document.getElementById("admissionBtn").onclick = () => {
+    document.getElementById("admissionPopup").style.display = "flex";
+  };
+  document.getElementById("closePopup").onclick = () => {
+    document.getElementById("admissionPopup").style.display = "none";
+  };
+</script>
+      <a href="campus.html" class="hero-btn">Explore Campus</a>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="py-32 px-6 max-w-6xl mx-auto reveal-section">
+  <h2 class="section-title">About Us</h2>
+  <p class="mt-6 text-gray-300 leading-relaxed">
+    Aurora International School is dedicated to excellence in education,
+    innovation, and holistic development. We blend tradition with modern
+    learning methodologies to shape leaders of tomorrow.
+  </p>
+</section>
+<!-- ================= ACADEMICS ================= -->
+<section id="academics" class="academics-section reveal-section">
+  <h2 class="section-title">Academics</h2>
+
+  <div class="academics-grid">
+    <div class="academic-banner primary">
+      <span>Primary School</span>
+    </div>
+
+    <div class="academic-banner middle">
+      <span>Middle School</span>
+    </div>
+
+    <div class="academic-banner secondary">
+      <span>Secondary School</span>
+    </div>
+
+    <div class="academic-banner senior">
+      <span>Senior Secondary</span>
+    </div>
+  </div>
+  <!-- ================= ACADEMICS POPUP ================= -->
+<div id="academics-popup">
+  <span id="academics-close">✕</span>
+  <img id="academics-popup-img" src="">
+</div>
+</section>
+<!-- HOUSES -->
+<section id="houses" class="py-32 px-6 max-w-7xl mx-auto reveal-section">
+  <h2 class="section-title text-center">School Houses</h2>
+
+  <div class="houses-grid">
+    <div class="house-banner phoenix">
+      <span>Phoenix</span>
+    </div>
+
+    <div class="house-banner falcon">
+      <span>Falcon</span>
+    </div>
+
+    <div class="house-banner serpent">
+      <span>Serpent</span>
+    </div>
+
+    <div class="house-banner titan">
+      <span>Titan</span>
+    </div>
+  </div>
+</section>
+
+<!-- FACILITIES -->
+<section id="facilities" class="py-32 px-6 bg-[#0f172a] reveal-section">
+  <h2 class="section-title text-center">Facilities</h2>
+<div class="facilities-grid">
+  <div class="facility-banner library">
+    <span>LIBRARY</span>
+  </div>
+
+  <div class="facility-banner science">
+    <span>SCIENCE LAB</span>
+  </div>
+
+  <div class="facility-banner computer">
+    <span>COMPUTER LAB</span>
+  </div>
+
+  <div class="facility-banner sports">
+    <span>SPORTS COMPLEX</span>
+  </div>
+
+  <div class="facility-banner auditorium">
+    <span>AUDITORIUM</span>
+  </div>
+</div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="py-32 px-6 max-w-5xl mx-auto reveal-section">
+  <h2 class="section-title text-center">Contact Us</h2>
+
+ <form id="contact-form" class="mt-12 grid gap-6">
+  <input type="text" placeholder="Your Name" class="input-field">
+  <input type="email" placeholder="Your Email" class="input-field">
+  <textarea placeholder="Your Message" rows="4" class="input-field"></textarea>
+  <button class="cta-btn">Send Message</button>
+</form>
+</section>
+
+</div>
+
+<!-- ================= JS FILES ================= -->
+<script src="js/intro.js"></script>
+<script src="js/three-bg.js"></script>
+<script src="js/animation.js"></script>
+<script src="js/main.js"></script>
+<canvas id="cursor-canvas"></canvas>
+<script src="js/cursor.js"></script>
+</body>
+
+</html>
